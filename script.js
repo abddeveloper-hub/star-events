@@ -32,9 +32,8 @@ const bookingForm = document.getElementById('bookingForm');
 
 // WhatsApp phone numbers to receive inquiries (country code 91 + number without +)
 const whatsappNumbers = [
-    { name: 'Primary', number: '919844691633' },
-    { name: 'Secondary', number: '919480156353' },
-    { name: 'Tertiary', number: '919731756353' }
+    { name: 'Primary', number: '919480156353' },
+    { name: 'Alternate', number: '919731756353' }
 ];
 
 // Only run this if the form exists on the current page
@@ -55,9 +54,13 @@ if (bookingForm) {
             const message = `🎉 New Event Inquiry\n\nName: ${name}\nPhone: ${phone}\nEvent Date: ${eventDate}\nGuests: ${guests}\n\nPlease contact them to finalize the booking.`;
             const encodedMessage = encodeURIComponent(message);
 
-            // Open WhatsApp with the primary number immediately
-            const primaryWhatsappUrl = `https://wa.me/${whatsappNumbers[0].number}?text=${encodedMessage}`;
-            window.open(primaryWhatsappUrl, '_blank');
+            // Open WhatsApp with both numbers
+            whatsappNumbers.forEach((contact, index) => {
+                const whatsappUrl = `https://wa.me/${contact.number}?text=${encodedMessage}`;
+                setTimeout(() => {
+                    window.open(whatsappUrl, '_blank');
+                }, index * 1000); // Stagger by 1 second
+            });
 
             // Save to Firebase in the background
             try {
@@ -73,7 +76,7 @@ if (bookingForm) {
             }
 
             // Show success message
-            alert("✅ Inquiry sent successfully! Opening WhatsApp...");
+            alert("✅ Inquiry sent to both numbers! Opening WhatsApp...");
 
             bookingForm.reset();
             btn.textContent = "Send Inquiry";
