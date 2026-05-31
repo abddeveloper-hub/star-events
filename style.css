@@ -143,6 +143,14 @@ nav ul { list-style: none; display: flex; gap: 30px; }
     nav.active ul { 
         display: flex; 
         flex-direction: column; 
+        width: 100%; 
+        gap: 15px; 
+        background: var(--onyx-surface);
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 15px;
+        box-shadow: var(--shadow-raised);
+    }
     .container {
         padding: 24px 2%;
     }
@@ -205,14 +213,6 @@ nav ul { list-style: none; display: flex; gap: 30px; }
     }
     footer {
         padding: 30px 2% 20px !important;
-    }
-        width: 100%; 
-        gap: 15px; 
-        background: var(--onyx-surface);
-        padding: 20px;
-        border-radius: 8px;
-        margin-top: 15px;
-        box-shadow: var(--shadow-raised);
     }
 }
 
