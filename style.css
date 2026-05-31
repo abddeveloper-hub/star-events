@@ -152,23 +152,45 @@ nav ul { list-style: none; display: flex; gap: 30px; }
         box-shadow: var(--shadow-raised);
     }
     .container {
-        padding: 24px 2%;
+        padding: 24px 4%;
     }
     .page-header {
-        height: 28vh !important;
-        padding: 0 2% !important;
-        min-height: 120px;
+        height: auto !important;
+        min-height: 60vh !important;
+        padding: 80px 5% !important;
         text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .page-header > div {
+        width: 100%;
+        max-width: 100% !important;
     }
     .page-header h1 {
-        font-size: 1.3rem !important;
+        font-size: 2rem !important;
+    }
+    .page-header p {
+        font-size: 1rem !important;
+        margin-bottom: 28px !important;
+    }
+    .page-header .hero-buttons {
+        flex-direction: column !important;
+        gap: 14px !important;
+        align-items: stretch !important;
+        width: 100%;
+    }
+    .page-header .hero-buttons a {
+        width: 100% !important;
+        text-align: center;
+        box-sizing: border-box;
     }
     .grid-3, .testimonial-slider {
         grid-template-columns: 1fr !important;
         gap: 18px !important;
     }
     .card, .testimonial-card {
-        padding: 22px 10px !important;
+        padding: 22px 16px !important;
         font-size: 0.97rem;
     }
     .gallery-grid {
@@ -176,7 +198,7 @@ nav ul { list-style: none; display: flex; gap: 30px; }
         gap: 15px !important;
     }
     .gallery-item {
-        height: 180px !important;
+        height: 200px !important;
         border-radius: 8px !important;
     }
     .filter-controls {
@@ -197,8 +219,8 @@ nav ul { list-style: none; display: flex; gap: 30px; }
         font-size: 2.2rem !important;
     }
     .section-title {
-        font-size: 1.1rem;
-        margin-bottom: 18px;
+        font-size: 1.8rem;
+        margin-bottom: 24px;
     }
     .faq-container {
         padding: 0 2%;
@@ -212,7 +234,7 @@ nav ul { list-style: none; display: flex; gap: 30px; }
         font-size: 0.93rem !important;
     }
     footer {
-        padding: 30px 2% 20px !important;
+        padding: 30px 4% 20px !important;
     }
 }
 
@@ -251,6 +273,21 @@ nav a:hover, nav a.active {
 
 /* --- 2. Sections --- */
 .container { padding: 100px 6%; }
+
+/* Hero / Page Header */
+.page-header {
+    height: 80vh;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    padding: 0 6%;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
 
 .section-title {
     text-align: center;
@@ -672,7 +709,7 @@ footer p { color: var(--text-muted); font-size: 0.85rem; margin-top: 20px; }
     header { 
         flex-direction: row; 
         flex-wrap: wrap;
-        padding: 15px 6%; 
+        padding: 10px 5%; 
         justify-content: space-between;
         align-items: center;
     }
@@ -682,8 +719,8 @@ footer p { color: var(--text-muted); font-size: 0.85rem; margin-top: 20px; }
         flex: 1;
     }
     .logo-img { 
-        height: 180px; 
-        min-height: 180px; 
+        height: 70px; 
+        min-height: 70px; 
         width: auto !important; 
     }
     .menu-toggle { 
@@ -694,7 +731,7 @@ footer p { color: var(--text-muted); font-size: 0.85rem; margin-top: 20px; }
     }
     nav { width: 100%; }
     nav ul { margin-top: 0; gap: 15px; justify-content: center; }
-    .section-title { font-size: 2.2rem; }
+    .section-title { font-size: 2rem; }
     
     .form-grid {
         grid-template-columns: 1fr;
@@ -705,15 +742,26 @@ footer p { color: var(--text-muted); font-size: 0.85rem; margin-top: 20px; }
 }
 
 @media (max-width: 480px) {
-    header { padding: 10px 5%; }
-    .logo-img { height: 150px; min-height: 150px; }
-    footer .logo-img { height: 150px; min-height: 150px; }
+    header { padding: 10px 4%; }
+    .logo-img { height: 60px; min-height: 60px; }
+    footer .logo-img { height: 120px; min-height: 120px; }
     .menu-toggle { font-size: 26px; }
     .container {
-        padding: 40px 2%;
+        padding: 40px 4%;
+    }
+    .page-header {
+        min-height: 55vh !important;
+        padding: 70px 4% !important;
+    }
+    .page-header h1 {
+        font-size: 1.7rem !important;
+        line-height: 1.2 !important;
+    }
+    .page-header p {
+        font-size: 0.95rem !important;
     }
     .contact-wrapper {
-        padding: 20px 5px;
+        padding: 20px 10px;
         gap: 20px;
         border-radius: 10px;
     }
@@ -737,8 +785,8 @@ footer p { color: var(--text-muted); font-size: 0.85rem; margin-top: 20px; }
         font-size: 1.5rem;
     }
     .section-title {
-        font-size: 1.3rem;
-        margin-bottom: 30px;
+        font-size: 1.5rem;
+        margin-bottom: 24px;
     }
     .info-item {
         gap: 10px;
