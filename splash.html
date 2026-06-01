@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STAR WEDDINGS AND EVENTS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --gold: #D4AF37;
+            --gold-light: #F3E5AB;
+            --gold-dark: #996515;
+            --onyx: #0a0a0a;
+        }
+
+        body {
+            background: var(--onyx);
+            font-family: 'Montserrat', sans-serif;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        /* ── Particle canvas ── */
+        #particles {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── Radial glow behind logo ── */
+        .glow-ring {
+            position: absolute;
+            width: 420px;
+            height: 420px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(212,175,55,0.18) 0%, rgba(212,175,55,0.06) 50%, transparent 75%);
+            animation: pulse-glow 3s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { transform: scale(1);   opacity: 0.7; }
+            50%       { transform: scale(1.12); opacity: 1;   }
+        }
+
+        /* ── Rotating ring ── */
+        .orbit-ring {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            border: 1px solid rgba(212,175,55,0.25);
+            animation: spin 12s linear infinite;
+            z-index: 1;
+        }
+        .orbit-ring::before {
+            content: '';
+            position: absolute;
+            top: -4px; left: 50%;
+            transform: translateX(-50%);
+            width: 8px; height: 8px;
+            background: var(--gold);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--gold), 0 0 20px var(--gold);
+        }
+
+        .orbit-ring-2 {
+            width: 390px;
+            height: 390px;
+            border: 1px solid rgba(212,175,55,0.12);
+            animation: spin 20s linear infinite reverse;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to   { transform: rotate(360deg); }
+        }
+
+        /* ── Main content wrapper ── */
+        .splash-wrapper {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            animation: entrance 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+        }
+
+        @keyframes entrance {
+            from { opacity: 0; transform: scale(0.85) translateY(30px); }
+            to   { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* ── Logo ── */
+        .logo-img {
+            width: 260px;
+            height: auto;
+            filter: drop-shadow(0 0 30px rgba(212,175,55,0.5));
+            animation: logo-float 4s ease-in-out infinite;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+        @keyframes logo-float {
+            0%, 100% { transform: translateY(0px);  }
+            50%       { transform: translateY(-10px); }
+        }
+
+        /* ── Brand name ── */
+        .brand-name {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.6rem, 6vw, 2.8rem);
+            font-weight: 700;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: transparent;
+            background: linear-gradient(135deg, #FFE082, #D4AF37, #996515, #D4AF37, #FFE082);
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: shimmer 4s linear infinite;
+            text-shadow: none;
+            margin-top: -10px;
+            text-align: center;
+        }
+
+        @keyframes shimmer {
+            0%   { background-position: 100% 0; }
+            100% { background-position: -100% 0; }
+        }
+
+        .brand-sub {
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(0.6rem, 2.5vw, 0.85rem);
+            letter-spacing: 5px;
+            color: rgba(212,175,55,0.7);
+            text-transform: uppercase;
+            margin-top: 8px;
+            text-align: center;
+        }
+
+        /* ── Divider ── */
+        .divider {
+            width: 180px;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+            margin: 24px auto 28px;
+        }
+
+        /* ── Tap button ── */
+        .launch-btn {
+            position: relative;
+            padding: 16px 48px;
+            background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(212,175,55,0.35), 0 0 0 0 rgba(212,175,55,0.4);
+            animation: heartbeat 2.5s ease-in-out infinite;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .launch-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -60%;
+            width: 60%; height: 200%;
+            background: rgba(255,255,255,0.25);
+            transform: skewX(-20deg);
+            animation: shine 3s ease-in-out infinite;
+        }
+
+        @keyframes shine {
+            0%, 100% { left: -60%; opacity: 0.6; }
+            50%       { left: 130%;  opacity: 0;   }
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { box-shadow: 0 8px 30px rgba(212,175,55,0.35), 0 0 0 0 rgba(212,175,55,0.3); }
+            50%       { box-shadow: 0 8px 30px rgba(212,175,55,0.55), 0 0 0 12px rgba(212,175,55,0); }
+        }
+
+        .launch-btn:active {
+            transform: scale(0.96);
+        }
+
+        /* ── Tap hint text ── */
+        .tap-hint {
+            margin-top: 20px;
+            font-size: 0.72rem;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.25);
+            text-transform: uppercase;
+            animation: blink 2s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 0.3; }
+            50%       { opacity: 0.8; }
+        }
+
+        /* ── Exit / launch transition ── */
+        .launch-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--onyx);
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.7s ease;
+        }
+
+        .launch-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* ── Corner accents ── */
+        .corner {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            z-index: 2;
+            opacity: 0.4;
+        }
+        .corner-tl { top: 20px; left: 20px; border-top: 1px solid var(--gold); border-left: 1px solid var(--gold); }
+        .corner-tr { top: 20px; right: 20px; border-top: 1px solid var(--gold); border-right: 1px solid var(--gold); }
+        .corner-bl { bottom: 20px; left: 20px; border-bottom: 1px solid var(--gold); border-left: 1px solid var(--gold); }
+        .corner-br { bottom: 20px; right: 20px; border-bottom: 1px solid var(--gold); border-right: 1px solid var(--gold); }
+
+        /* ── Stars ── */
+        .star {
+            position: fixed;
+            background: var(--gold);
+            border-radius: 50%;
+            z-index: 1;
+            animation: twinkle var(--dur, 3s) ease-in-out infinite;
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.1; transform: scale(1); }
+            50%       { opacity: 0.8; transform: scale(1.4); }
+        }
+
+        @media (max-width: 480px) {
+            .logo-img { width: 200px; }
+            .orbit-ring { width: 270px; height: 270px; }
+            .orbit-ring-2 { width: 310px; height: 310px; }
+            .glow-ring { width: 320px; height: 320px; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="particles"></canvas>
+
+    <!-- Corner accents -->
+    <div class="corner corner-tl"></div>
+    <div class="corner corner-tr"></div>
+    <div class="corner corner-bl"></div>
+    <div class="corner corner-br"></div>
+
+    <!-- Glow & orbit rings -->
+    <div class="glow-ring"></div>
+    <div class="orbit-ring"></div>
+    <div class="orbit-ring orbit-ring-2"></div>
+
+    <!-- Main splash content -->
+    <div class="splash-wrapper" id="splashContent">
+        <img src="logo_transparent.png" alt="Star Wedding & Events" class="logo-img" id="logoImg">
+
+        <div class="brand-name">Star Weddings & Events</div>
+        <div class="brand-sub">Premium Celebrations</div>
+
+        <div class="divider"></div>
+
+        <button class="launch-btn" id="launchBtn" onclick="launchSite()">
+            ✦ &nbsp; Enter &nbsp; ✦
+        </button>
+
+        <div class="tap-hint">Tap to begin your journey</div>
+    </div>
+
+    <!-- Dark overlay for fade-out transition -->
+    <div class="launch-overlay" id="launchOverlay"></div>
+
+    <script>
+        /* ── Particle system ── */
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        const particles = [];
+        const GOLD = [212, 175, 55];
+
+        class Particle {
+            constructor() { this.reset(true); }
+            reset(random = false) {
+                this.x = Math.random() * canvas.width;
+                this.y = random ? Math.random() * canvas.height : canvas.height + 10;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedY = -(Math.random() * 0.6 + 0.2);
+                this.speedX = (Math.random() - 0.5) * 0.3;
+                this.opacity = Math.random() * 0.7 + 0.1;
+                this.life = 0;
+                this.maxLife = Math.random() * 200 + 100;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.life++;
+                if (this.y < -10 || this.life > this.maxLife) this.reset();
+            }
+            draw() {
+                const alpha = Math.sin((this.life / this.maxLife) * Math.PI) * this.opacity;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${GOLD[0]},${GOLD[1]},${GOLD[2]},${alpha})`;
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 80; i++) particles.push(new Particle());
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        /* ── Static star dots ── */
+        for (let i = 0; i < 30; i++) {
+            const s = document.createElement('div');
+            s.className = 'star';
+            const size = Math.random() * 2 + 1;
+            s.style.cssText = `
+                width:${size}px; height:${size}px;
+                top:${Math.random()*100}%;
+                left:${Math.random()*100}%;
+                --dur:${(Math.random()*3+2).toFixed(1)}s;
+                animation-delay:${(Math.random()*3).toFixed(1)}s;
+            `;
+            document.body.appendChild(s);
+        }
+
+        /* ── Whole-screen tap also launches ── */
+        document.body.addEventListener('click', function(e) {
+            if (e.target.id !== 'launchBtn') {
+                // allow tap anywhere to launch
+                launchSite();
+            }
+        });
+
+        /* ── Logo pulse on hover/touch ── */
+        const logo = document.getElementById('logoImg');
+        logo.addEventListener('mouseenter', () => {
+            logo.style.filter = 'drop-shadow(0 0 50px rgba(212,175,55,0.9))';
+            logo.style.transform = 'scale(1.05)';
+        });
+        logo.addEventListener('mouseleave', () => {
+            logo.style.filter = '';
+            logo.style.transform = '';
+        });
+
+        /* ── Launch function ── */
+        function launchSite() {
+            const overlay = document.getElementById('launchOverlay');
+            const content = document.getElementById('splashContent');
+
+            // scale-up logo quickly
+            logo.style.transition = 'transform 0.5s ease, filter 0.5s ease';
+            logo.style.transform = 'scale(1.15)';
+            logo.style.filter = 'drop-shadow(0 0 60px rgba(212,175,55,1)) brightness(1.3)';
+
+            // fade rings & content
+            content.style.transition = 'opacity 0.4s ease 0.2s';
+            content.style.opacity = '0';
+
+            // bring in dark overlay
+            setTimeout(() => {
+                overlay.classList.add('active');
+            }, 300);
+
+            // navigate
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
