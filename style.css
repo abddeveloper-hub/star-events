@@ -1188,3 +1188,68 @@ footer p { color: var(--text-muted); font-size: 0.85rem; margin-top: 20px; }
     position: relative;
     clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
 }
+
+/* --- 20. Custom Cursor & Animations --- */
+.custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--gold-base);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s, height 0.2s, background-color 0.2s;
+    z-index: 9999;
+    mix-blend-mode: difference;
+}
+.custom-cursor-dot {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 6px;
+    height: 6px;
+    background-color: var(--gold-base);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 10000;
+}
+.custom-cursor.hover {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(212, 175, 55, 0.2);
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+.floating {
+    animation: float 4s ease-in-out infinite;
+}
+
+.parallax {
+    transition: transform 0.1s ease-out;
+}
+
+/* --- 21. Seasonal Banner --- */
+.seasonal-banner {
+    width: 100%;
+    padding: 12px 20px;
+    text-align: center;
+    position: relative;
+    z-index: 1001;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    font-family: 'Montserrat', sans-serif;
+}
+
+@media (max-width: 768px) {
+    .seasonal-banner > div {
+        flex-direction: column;
+        gap: 5px !important;
+        text-align: center;
+    }
+}

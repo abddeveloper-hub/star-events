@@ -321,3 +321,106 @@ window.switchSeating = function(planId) {
     // Show selected plan
     document.getElementById(planId).classList.add('active');
 };
+
+// ============================================================
+// 12. Custom Cursor & Parallax Animations
+// ============================================================
+// Only enable custom cursor on non-touch devices
+if (window.matchMedia("(pointer: fine)").matches) {
+    const cursor = document.createElement('div');
+    cursor.classList.add('custom-cursor');
+    const cursorDot = document.createElement('div');
+    cursorDot.classList.add('custom-cursor-dot');
+    
+    document.body.appendChild(cursor);
+    document.body.appendChild(cursorDot);
+
+    document.addEventListener('mousemove', (e) => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+        cursorDot.style.left = e.clientX + 'px';
+        cursorDot.style.top = e.clientY + 'px';
+    });
+
+    // Add hover effect to interactive elements
+    const hoverElements = document.querySelectorAll('a, button, .card, .gallery-item, .filter-btn, .faq-question');
+    hoverElements.forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+    });
+}
+
+// Parallax scrolling effect
+window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    document.querySelectorAll('.parallax').forEach(el => {
+        const speed = el.dataset.speed || 0.2;
+        el.style.transform = `translateY(${scrolled * speed}px)`;
+    });
+});
+
+// Add floating effect to some elements to make it dynamic
+setTimeout(() => {
+    document.querySelectorAll('.card').forEach((card, index) => {
+        // Optional floating effect
+        if(index % 2 !== 0) {
+            card.classList.add('floating');
+        }
+    });
+}, 1000);
+
+// ============================================================
+// 13. Dynamic Seasonal Themes
+// ============================================================
+function applySeasonalTheme() {
+    const month = new Date().getMonth(); // 0 = Jan, 11 = Dec
+    let seasonObj = {
+        name: "Welcome",
+        message: "Premium Event Setups",
+        color: "var(--gold-base)"
+    };
+
+    if (month >= 2 && month <= 4) { // Mar - May
+        seasonObj = {
+            name: "Summer Weddings",
+            message: "Stay cool with our premium floral & airy event setups.",
+            color: "#FFA726" // Warm Orange
+        };
+    } else if (month >= 5 && month <= 8) { // Jun - Sep
+        seasonObj = {
+            name: "Monsoon Season",
+            message: "Don't let the rain stop you. Discover our waterproof, luxurious indoor hall decors.",
+            color: "#29B6F6" // Cool Blue
+        };
+    } else { // Oct - Feb
+        seasonObj = {
+            name: "Winter Festivities",
+            message: "Perfect weather for our grand outdoor lighting and spectacular evening setups.",
+            color: "#AB47BC" // Deep Purple
+        };
+    }
+
+    // Create a dynamic top banner
+    const banner = document.createElement('div');
+    banner.classList.add('seasonal-banner', 'fade-in', 'show');
+    banner.style.background = `linear-gradient(90deg, rgba(10,10,10,1) 0%, rgba(25,25,25,1) 50%, rgba(10,10,10,1) 100%)`;
+    banner.style.borderBottom = `2px solid ${seasonObj.color}`;
+    
+    banner.innerHTML = `
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: center; align-items: center; gap: 15px;">
+            <span style="font-weight: bold; color: ${seasonObj.color}; text-transform: uppercase; letter-spacing: 2px; font-size: 0.85rem;">✨ ${seasonObj.name} Special:</span>
+            <span style="color: #eee; font-size: 0.9rem;">${seasonObj.message}</span>
+            <a href="contact.html" style="color: ${seasonObj.color}; font-size: 0.85rem; text-decoration: underline; margin-left: 10px; font-weight: 600;">Plan Now</a>
+        </div>
+    `;
+
+    // Insert at the very top of the body
+    document.body.insertBefore(banner, document.body.firstChild);
+}
+
+// Run the seasonal theme checker when DOM is loaded
+if(document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', applySeasonalTheme);
+} else {
+    applySeasonalTheme();
+}
