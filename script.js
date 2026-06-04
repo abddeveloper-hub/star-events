@@ -257,7 +257,6 @@ if (lightbox && galleryItems.length > 0) {
             lightbox.style.display = 'none';
         }
     });
-    });
 }
 
 // ============================================================
