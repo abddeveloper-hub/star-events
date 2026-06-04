@@ -24,13 +24,13 @@
     </header>
 
     <section class="page-header" style="height: 40vh; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('hero.png') center/cover; display: flex; align-items: center; justify-content: center;">
-        <h1 class="fade-in" style="color: white; font-size: 3rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.5);">Book Your <span style="color: var(--gold-base); font-style: italic;">Event</span></h1>
+        <h1 class="scale-up" style="color: white; font-size: 3rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.5);">Book Your <span style="color: var(--gold-base); font-style: italic;">Event</span></h1>
     </section>
 
     <section class="container">
-        <h2 class="section-title fade-in">Request a <span>Quote</span></h2>
+        <h2 class="section-title slide-in-right">Request a <span>Quote</span></h2>
         
-        <div class="contact-wrapper fade-in">
+        <div class="contact-wrapper slide-in-left">
             <div class="contact-info">
                 <h3>Get in <span>Touch</span></h3>
                 <p>Have a question or want to book an event? Reach out to us and our team will get back to you shortly.</p>
@@ -109,6 +109,16 @@
                     <button type="submit" class="cta-button">Send Inquiry</button>
                 </form>
             </div>
+        </div>
+    </section>
+
+    <section class="container scale-up" style="margin-top: 20px; padding-top: 0;">
+        <h2 class="section-title" style="margin-bottom: 20px; font-size: 1.8rem;">Find <span>Us</span></h2>
+        <div style="border-radius: 12px; overflow: hidden; border: 1px solid var(--glass-border); box-shadow: var(--shadow-raised); height: 400px; width: 100%; position: relative; background: var(--onyx-carved);">
+            <!-- CSS filter used to invert Google Maps default colors into a sleek dark mode -->
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31131.5796916531!2d75.29749551101925!3d12.684534481488133!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba4ec6ad5fcfdc3%3A0x6b30f25265ab7c42!2sIshwaramangala%2C%20Karnataka%20574313!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" width="100%" height="100%" style="border:0; filter: invert(100%) hue-rotate(180deg) contrast(1.2) brightness(0.9) grayscale(0.2);" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <!-- Subtle gold overlay to match the brand colors -->
+            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; background: linear-gradient(135deg, rgba(212, 175, 55, 0.05), rgba(212, 175, 55, 0));"></div>
         </div>
     </section>
 

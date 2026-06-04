@@ -34,7 +34,7 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, { threshold: 0.1 });
 
-document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .scale-up').forEach((el) => observer.observe(el));
 
 // ============================================================
 // 2. Mobile Menu Toggle
@@ -96,7 +96,7 @@ if (filterBtns.length > 0) {
 
             galleryItems.forEach(item => {
                 if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
-                    item.style.display = 'block';
+                    item.style.display = 'inline-block';
                     setTimeout(() => {
                         item.style.opacity = '1';
                         item.style.transform = 'scale(1)';
@@ -178,14 +178,147 @@ if (bookingForm) {
                 console.warn("Firebase save warning: ", firebaseError);
             }
 
-            alert("✅ Inquiry sent! Opening WhatsApp...");
+            window.showToast("✅ Inquiry sent! Opening WhatsApp...", "success");
             bookingForm.reset();
             btn.textContent = "Send Inquiry";
 
         } catch (error) {
             console.error("Error: ", error);
-            alert("Something went wrong. Please try again.\nError: " + error.message);
+            window.showToast("❌ Something went wrong. Please try again.", "error");
             btn.textContent = "Send Inquiry";
         }
     });
 }
+
+// ============================================================
+// 7. Customer Review Submission
+// ============================================================
+const reviewForm = document.getElementById('reviewForm');
+if (reviewForm) {
+    reviewForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const btn = reviewForm.querySelector('.cta-button');
+        const originalText = btn.textContent;
+        btn.textContent = "Submitting...";
+        
+        try {
+            const name = document.getElementById('reviewName').value;
+            const rating = document.getElementById('reviewRating').value;
+            const text = document.getElementById('reviewText').value;
+            
+            // Save to Firebase
+            try {
+                await addDoc(collection(db, "reviews"), {
+                    name,
+                    rating: parseInt(rating),
+                    text,
+                    status: 'pending',
+                    submittedAt: new Date()
+                });
+            } catch (firebaseError) {
+                console.warn("Firebase save warning: ", firebaseError);
+            }
+            
+            window.showToast("✅ Thank you for your review! It has been submitted successfully.", "success");
+            reviewForm.reset();
+            btn.textContent = originalText;
+            
+        } catch (error) {
+            console.error("Error submitting review: ", error);
+            window.showToast("❌ Something went wrong. Please try again.", "error");
+            btn.textContent = originalText;
+        }
+    });
+}
+
+// ============================================================
+// 8. Gallery Lightbox Modal
+// ============================================================
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const closeBtn = document.querySelector('.lightbox-close');
+
+if (lightbox && galleryItems.length > 0) {
+    galleryItems.forEach(item => {
+        item.addEventListener('click', () => {
+            lightbox.style.display = 'block';
+            lightboxImg.src = item.src;
+        });
+    });
+
+    closeBtn.addEventListener('click', () => {
+        lightbox.style.display = 'none';
+    });
+
+    // Close on outside click
+    window.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+            lightbox.style.display = 'none';
+        }
+    });
+    });
+}
+
+// ============================================================
+// 9. Toast Notification System
+// ============================================================
+const toastContainer = document.createElement('div');
+toastContainer.className = 'toast-container';
+document.body.appendChild(toastContainer);
+
+window.showToast = function(message, type = 'success') {
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.innerHTML = message;
+    
+    toastContainer.appendChild(toast);
+    
+    // Trigger animation
+    setTimeout(() => toast.classList.add('show'), 10);
+    
+    // Remove after 3 seconds
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 400);
+    }, 4000);
+};
+
+// ============================================================
+// 10. Scroll to Top Button
+// ============================================================
+const scrollTopBtn = document.createElement('button');
+scrollTopBtn.className = 'scroll-top-btn';
+scrollTopBtn.innerHTML = '↑';
+document.body.appendChild(scrollTopBtn);
+
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 500) {
+        scrollTopBtn.classList.add('show');
+    } else {
+        scrollTopBtn.classList.remove('show');
+    }
+});
+
+scrollTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// ============================================================
+// 11. Interactive Seating Plans (services page)
+// ============================================================
+window.switchSeating = function(planId) {
+    // Remove active class from all tabs
+    document.querySelectorAll('.seat-tab').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    // Add active class to clicked tab
+    event.target.classList.add('active');
+
+    // Hide all seating plans
+    document.querySelectorAll('.seat-plan').forEach(plan => {
+        plan.classList.remove('active');
+    });
+    // Show selected plan
+    document.getElementById(planId).classList.add('active');
+};

@@ -24,32 +24,32 @@
     </header>
 
     <section class="page-header" style="height: 40vh; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('hero.png') center/cover; display: flex; align-items: center; justify-content: center;">
-        <h1 class="fade-in" style="color: white; font-size: 3rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.5);">Our <span style="color: var(--gold-base); font-style: italic;">Services</span></h1>
+        <h1 class="scale-up" style="color: white; font-size: 3rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.5);">Our <span style="color: var(--gold-base); font-style: italic;">Services</span></h1>
     </section>
 
     <section class="container">
         <div class="grid-3">
-            <div class="card fade-in">
+            <div class="card slide-in-left">
                 <h3>Shamiyana Tents</h3>
                 <p>Traditional, modern, and waterproof setups in a variety of sizes and colors to suit any occasion.</p>
             </div>
-            <div class="card fade-in">
+            <div class="card scale-up" style="transition-delay: 0.1s;">
                 <h3>Stage Decoration</h3>
                 <p>Breathtaking floral and structural stage designs for weddings, engagements, and corporate events.</p>
             </div>
-            <div class="card fade-in">
+            <div class="card slide-in-right" style="transition-delay: 0.2s;">
                 <h3>VIP Seating</h3>
                 <p>Elegant chairs, premium dining tables, and luxurious sofa arrangements for your distinguished guests.</p>
             </div>
-            <div class="card fade-in">
+            <div class="card slide-in-left">
                 <h3>Ambient Lighting</h3>
                 <p>Complete lighting solutions including chandeliers, fairy lights, and dynamic stage uplighting.</p>
             </div>
-            <div class="card fade-in">
+            <div class="card scale-up" style="transition-delay: 0.1s;">
                 <h3>Catering Equipment</h3>
                 <p>High-quality buffet setups, dining ware, and food service stations.</p>
             </div>
-            <div class="card fade-in">
+            <div class="card slide-in-right" style="transition-delay: 0.2s;">
                 <h3>Red Carpet Entry</h3>
                 <p>Make a grand entrance with our specialized walkway decorations and floral arches.</p>
             </div>
@@ -57,8 +57,116 @@
     </section>
 
     <section class="container" style="background: var(--onyx-surface); border-top: 1px solid var(--glass-border);">
+        <h2 class="section-title slide-in-left">Interactive <span>Seating Plans</span></h2>
+        <div class="seating-tabs slide-in-right">
+            <button class="seat-tab active" onclick="switchSeating('banquet')">Banquet Style</button>
+            <button class="seat-tab" onclick="switchSeating('theatre')">Theatre Style</button>
+            <button class="seat-tab" onclick="switchSeating('cabaret')">Cabaret Style</button>
+        </div>
+        <div class="seating-display scale-up">
+            <div id="banquet" class="seat-plan active">
+                <div class="seat-diagram banquet-diagram">
+                    <div class="round-table"></div><div class="round-table"></div><div class="round-table"></div>
+                    <div class="round-table"></div><div class="round-table"></div><div class="round-table"></div>
+                </div>
+                <h3>Banquet Style</h3>
+                <p>Ideal for gala dinners and weddings. Round tables seating 8-10 guests each, encouraging conversation and dining.</p>
+            </div>
+            <div id="theatre" class="seat-plan">
+                <div class="seat-diagram theatre-diagram">
+                    <div class="row"><div class="chair"></div><div class="chair"></div><div class="chair"></div><div class="chair"></div><div class="chair"></div><div class="chair"></div></div>
+                    <div class="row"><div class="chair"></div><div class="chair"></div><div class="chair"></div><div class="chair"></div><div class="chair"></div><div class="chair"></div></div>
+                    <div class="row"><div class="chair"></div><div class="chair"></div><div class="chair"></div><div class="chair"></div><div class="chair"></div><div class="chair"></div></div>
+                </div>
+                <h3>Theatre Style</h3>
+                <p>Perfect for performances, speeches, or large ceremonies. Rows of chairs facing the main stage.</p>
+            </div>
+            <div id="cabaret" class="seat-plan">
+                <div class="seat-diagram cabaret-diagram">
+                    <div class="half-table"></div><div class="half-table"></div><div class="half-table"></div>
+                    <div class="half-table"></div><div class="half-table"></div><div class="half-table"></div>
+                </div>
+                <h3>Cabaret Style</h3>
+                <p>Similar to banquet but with an open end facing the stage. Great for events with both dining and stage entertainment.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="container" style="border-top: 1px solid var(--glass-border);">
+        <h2 class="section-title scale-up" style="margin-bottom: 20px;">Our <span>Process</span></h2>
+        <div class="timeline">
+            <div class="timeline-item left slide-in-left">
+                <div class="timeline-content">
+                    <h3>1. Consultation</h3>
+                    <p>We meet to understand your vision, theme, and requirements for the big day.</p>
+                </div>
+            </div>
+            <div class="timeline-item right slide-in-right">
+                <div class="timeline-content">
+                    <h3>2. Custom Design</h3>
+                    <p>Our experts draft an exclusive stage and lighting plan tailored specifically for your event.</p>
+                </div>
+            </div>
+            <div class="timeline-item left slide-in-left">
+                <div class="timeline-content">
+                    <h3>3. Flawless Execution</h3>
+                    <p>Our dedicated team sets up the venue with precision, using premium materials and equipment.</p>
+                </div>
+            </div>
+            <div class="timeline-item right slide-in-right">
+                <div class="timeline-content">
+                    <h3>4. The Celebration</h3>
+                    <p>You arrive to a breathtaking venue and enjoy an unforgettable, stress-free celebration.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container">
+        <h2 class="section-title scale-up">Event <span>Packages</span></h2>
+        <div class="pricing-grid">
+            <div class="pricing-card slide-in-left">
+                <h3>Silver</h3>
+                <div class="price">Essential</div>
+                <ul class="features">
+                    <li>Standard Stage Decor</li>
+                    <li>Basic Seating (Up to 200)</li>
+                    <li>Standard Lighting</li>
+                    <li>Entrance Arch</li>
+                </ul>
+                <a href="contact.html" class="cta-button">Inquire Now</a>
+            </div>
+            <div class="pricing-card scale-up featured" style="transition-delay: 0.2s;">
+                <div class="popular-badge">Most Popular</div>
+                <h3>Gold</h3>
+                <div class="price">Premium</div>
+                <ul class="features">
+                    <li>Premium Floral Stage</li>
+                    <li>VIP & Standard Seating (Up to 500)</li>
+                    <li>Ambient Stage Uplighting</li>
+                    <li>Red Carpet Walkway</li>
+                    <li>Catering Tables Setup</li>
+                </ul>
+                <a href="contact.html" class="cta-button">Inquire Now</a>
+            </div>
+            <div class="pricing-card slide-in-right" style="transition-delay: 0.4s;">
+                <h3>Platinum</h3>
+                <div class="price">Luxury</div>
+                <ul class="features">
+                    <li>Custom 3D Stage Design</li>
+                    <li>All VIP Sofa Seating (1000+)</li>
+                    <li>Crystal Chandeliers</li>
+                    <li>Full Venue Draping</li>
+                    <li>Complete Catering & Dining</li>
+                </ul>
+                <a href="contact.html" class="cta-button">Inquire Now</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="container" style="background: var(--onyx-surface); border-top: 1px solid var(--glass-border);">
         <h2 class="section-title fade-in">Frequently Asked <span>Questions</span></h2>
-        <div class="faq-container fade-in">
+        <div class="faq-container scale-up">
             <div class="faq-item">
                 <div class="faq-question">Do you provide services outside Ishwaramangala? <span class="faq-icon">+</span></div>
                 <div class="faq-answer">Yes, we cover events across multiple nearby districts and states. Additional travel and logistics charges may apply based on the distance.</div>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | STAR WEDDING EVENTS</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .admin-container {
+            padding: 100px 6%;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--onyx-surface);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow-raised);
+            margin-top: 20px;
+        }
+        .data-table th, .data-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--glass-border);
+            font-size: 0.95rem;
+        }
+        .data-table th {
+            background: var(--onyx-carved);
+            color: var(--gold-base);
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+        .data-table tr:hover {
+            background: rgba(255,255,255,0.02);
+        }
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+        .tabs {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .tab-btn {
+            background: var(--onyx-carved);
+            color: var(--text-muted);
+            border: 1px solid var(--glass-border);
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+        }
+        .tab-btn:hover {
+            border-color: var(--gold-base);
+            color: var(--text-main);
+        }
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--gold-dark), var(--gold-base));
+            color: var(--onyx-base);
+            border-color: transparent;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+        .tab-content {
+            display: none;
+            animation: zoomIn 0.4s ease;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .rating-stars {
+            color: var(--gold-base);
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <div class="logo-text-wrapper">
+                <span class="logo-star" style="font-size:24px;">STAR</span>
+                <span class="logo-subtitle" style="font-size:9px;">ADMIN PANEL</span>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html" class="active">Back to Website</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="admin-container">
+        <h2 class="section-title scale-up" style="text-align:left; margin-bottom: 40px;">Admin <span>Dashboard</span></h2>
+        
+        <div class="tabs slide-in-left">
+            <button class="tab-btn active" onclick="switchTab('inquiries')">Client Inquiries</button>
+            <button class="tab-btn" onclick="switchTab('reviews')">Customer Reviews</button>
+        </div>
+
+        <div id="inquiries" class="tab-content active">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Client Name</th>
+                        <th>Phone</th>
+                        <th>Event Details</th>
+                        <th>Location</th>
+                        <th>Guests</th>
+                    </tr>
+                </thead>
+                <tbody id="inquiriesList">
+                    <tr><td colspan="6" style="text-align:center; padding: 30px;">Loading inquiries...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="reviews" class="tab-content">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Reviewer Name</th>
+                        <th>Rating</th>
+                        <th>Review Text</th>
+                    </tr>
+                </thead>
+                <tbody id="reviewsList">
+                    <tr><td colspan="4" style="text-align:center; padding: 30px;">Loading reviews...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDW1lZBIUUDqCciWb3HjTQQIKCDStNmZds",
+            authDomain: "star-events-4d803.firebaseapp.com",
+            projectId: "star-events-4d803",
+            storageBucket: "star-events-4d803.firebasestorage.app",
+            messagingSenderId: "407728990447",
+            appId: "1:407728990447:web:0a6ae03a6f027e27db131a"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function loadData() {
+            try {
+                // Load Inquiries
+                const inqQ = query(collection(db, "inquiries"), orderBy("submittedAt", "desc"));
+                const inqSnap = await getDocs(inqQ);
+                let inqHtml = "";
+                inqSnap.forEach(doc => {
+                    const data = doc.data();
+                    const date = data.submittedAt ? data.submittedAt.toDate().toLocaleDateString() : 'N/A';
+                    inqHtml += `<tr>
+                        <td>${date}</td>
+                        <td><strong>${data.name}</strong></td>
+                        <td><a href="tel:${data.phone}" style="color:var(--gold-light); text-decoration:none;">${data.phone}</a></td>
+                        <td>${data.eventType} - ${data.eventDate}</td>
+                        <td>${data.location}</td>
+                        <td>${data.guests}</td>
+                    </tr>`;
+                });
+                document.getElementById('inquiriesList').innerHTML = inqHtml || "<tr><td colspan='6' style='text-align:center;'>No inquiries found</td></tr>";
+
+                // Load Reviews
+                const revQ = query(collection(db, "reviews"), orderBy("submittedAt", "desc"));
+                const revSnap = await getDocs(revQ);
+                let revHtml = "";
+                revSnap.forEach(doc => {
+                    const data = doc.data();
+                    const date = data.submittedAt ? data.submittedAt.toDate().toLocaleDateString() : 'N/A';
+                    const ratingStr = '<span class="rating-stars">' + '★'.repeat(data.rating || 5) + '☆'.repeat(5 - (data.rating || 5)) + '</span>';
+                    revHtml += `<tr>
+                        <td>${date}</td>
+                        <td><strong>${data.name}</strong></td>
+                        <td>${ratingStr}</td>
+                        <td><em style="color:#ccc;">"${data.text}"</em></td>
+                    </tr>`;
+                });
+                document.getElementById('reviewsList').innerHTML = revHtml || "<tr><td colspan='4' style='text-align:center;'>No reviews found</td></tr>";
+            } catch (e) {
+                console.error(e);
+                document.getElementById('inquiriesList').innerHTML = "<tr><td colspan='6' style='color:#ff6b6b; text-align:center;'>Unable to load data. Please ensure Firebase permissions are set properly.</td></tr>";
+                document.getElementById('reviewsList').innerHTML = "<tr><td colspan='4' style='color:#ff6b6b; text-align:center;'>Unable to load data. Please ensure Firebase permissions are set properly.</td></tr>";
+            }
+        }
+
+        window.switchTab = function(tabId) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        };
+
+        // Load initially
+        loadData();
+    </script>
+</body>
+</html>
